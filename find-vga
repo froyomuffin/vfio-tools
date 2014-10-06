@@ -1,0 +1,7 @@
+#!/bin/bash
+#lspci -vnn | awk -v RS='' '/VGA/'
+PCIHEADS=`lspci -v | grep 'VGA' | grep -i "nvidia\|radeon" | awk '{print $1}' | sed 's/\..*$//g' | xargs`
+for PCIHEAD in $PCIHEADS
+do
+	lspci -vn | grep $PCIHEAD | awk '{print $1,$3}'
+done
