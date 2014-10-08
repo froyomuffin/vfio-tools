@@ -1,6 +1,13 @@
 #!/bin/bash
 #lspci -vnn | awk -v RS='' '/VGA/'
 PCIHEADS=`lspci -v | grep 'VGA' | grep -i "nvidia\|radeon" | awk '{print $1}' | sed 's/\..*$//g' | xargs`
+echo "Devices found:"
+for PCIHEAD in $PCIHEADS
+do
+	lspci -nn | grep $PCIHEAD 
+done
+echo "==="
+echo "Short List:"
 for PCIHEAD in $PCIHEADS
 do
 	lspci -vn | grep $PCIHEAD | awk '{print $1,$3}'
