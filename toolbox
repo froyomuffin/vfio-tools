@@ -1,0 +1,18 @@
+#!/bin/bash
+
+function getPCIHeads {
+	lspci -v | grep 'VGA' | awk '{print $1}' | sed 's/\..*$//g' | xargs
+}
+
+function getLongList {
+	GREPSTR=`echo "$*" | sed 's/ /\\|/g'`
+	lspci -nn | grep $GREPSTR
+}
+
+function getShortList {
+	getLongList "$*" | sed "s/\ .*\[\|\].*$/ /g"
+}
+
+function extractShortList {
+	echo "$*" | sed "s/\ .*\[\|\].*$/ /g"
+}
