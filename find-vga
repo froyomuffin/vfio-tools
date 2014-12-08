@@ -7,9 +7,10 @@ TOOLBOXLOC=$SCRIPTDIR #Override this if you feel like placing the toolbox elsewh
 PCIHEADS=`getPCIHeads`
 LONGLIST=`getLongList "$PCIHEADS"`
 
+echo "======= Long list of VGA devices  ======="
 echo "$LONGLIST"
 
-echo "=======Reference======="
+echo "======= Short list of VGA devices ======="
 for PCIHEAD in $PCIHEADS
 do
 	lspci -vn | grep $PCIHEAD | awk '{print $1,$3}'

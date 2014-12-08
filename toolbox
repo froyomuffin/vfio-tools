@@ -5,7 +5,7 @@ function getPCIHeads {
 }
 
 function getLongList {
-	GREPSTR=`echo "$*" | sed 's/ /\\|/g'`
+	GREPSTR=`echo "$*" | sed "s/ / -e /g" | sed "s/^/ -e /g"`
 	lspci -nn | grep $GREPSTR
 }
 
