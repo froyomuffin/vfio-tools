@@ -1,18 +1,27 @@
 #!/bin/bash
 
-function getPCIHeads {
+getPCIHeads() {
 	lspci -v | grep 'VGA' | awk '{print $1}' | sed 's/\..*$//g' | xargs
 }
-
-function getLongList {
-	GREPSTR=`echo "$*" | sed "s/ / -e /g" | sed "s/^/ -e /g"`
-	lspci -nn | grep $GREPSTR
+getHeadList() {
+	PCIHEADS=`getPCIHeads`
+	for PCIHEAD in $PCIHEADS
+	do
+        	lspci -vn | grep $PCIHEAD | awk '{print $1,$3}'
+	done
 }
-
-function getShortList {
+getDetailedList() {
+	IDLIST=`echo "$*" | sed "s/ /|/g"`
+	lspci -vnn | awk "/$IDLIST/,/^$/"
+}
+getLongList() {
+	DETAILEDLIST=`getDetailedList $*`
+	IDLIST=`echo "$*" | sed "s/ /|/g"`
+	echo "$DETAILEDLIST" | awk "/$IDLIST|Kernel driver/,/$/" | sed "s/\r\n/ /g"
+}
+getShortList() {
 	getLongList "$*" | sed "s/\ .*\[\|\].*$/ /g"
 }
-
-function extractShortList {
+extractShortList() {
 	echo "$*" | sed "s/\ .*\[\|\].*$/ /g"
 }
