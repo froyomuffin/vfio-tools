@@ -2,7 +2,7 @@
 SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 TOOLBOXLOC=$SCRIPTDIR #Override this if you feel like placing the toolbox elsewhere
 
-. $TOOLBOXLOC/toolbox
+. $TOOLBOXLOC/setup-tools
 
 echo "======= Detailed list of VGA devices  ======="
 PCIHEADS=`getPCIHeads`
